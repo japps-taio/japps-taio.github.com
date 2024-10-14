@@ -27,13 +27,8 @@
     <link href="assets/css/style.css" rel="stylesheet" />
     <script  src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script>
-      const supabaseUrl = 'https://jkuzbtjfcwomnnwlrfsq.supabase.co';
-      const supabaseKey = (`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJp
-                            c3MiOiJzdXBhYmFzZSIsInJlZiI6ImprdXpidGpmY
-                            3dvbW5ud2xyZnNxIiwicm9sZSI6InNlcnZpY2Vfcm
-                            9sZSIsImlhdCI6MTcxMzI4OTc0NiwiZXhwIjoyMDI
-                            4ODY1NzQ2fQ.tbtTR2G8hsfyk7RdmgtE7QBLcIwQb
-                            Ylr-V2KqDeyKrc`).replaceAll(/[\n\r ]/g,'');
+      const supabaseUrl = 'https://lsnvjibgvbjxqctmnteg.supabase.co';
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxzbnZqaWJndmJqeHFjdG1udGVnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyODkyMjg2MywiZXhwIjoyMDQ0NDk4ODYzfQ.gW6JvgYrpYRU2K332UPr03-haZA2vLM4SQduOkocI_k';
       window.supabase = supabase.createClient(supabaseUrl, supabaseKey);
     </script>
   </head>
@@ -74,7 +69,7 @@
                   { 
                     nome: document.getElementById('nome').value,
                     codprofissional: document.getElementById('codprofissional').value, 
-                    cpf: `${parseInt(document.getElementById('cpf').value.slice(3,-2)).toString(36)}@profissional.ext`, 
+                    cpf: `${parseInt(document.getElementById('cpf').value).toString(36)}@profissional.ext`,
                   },
             ]);
             if (error) {
@@ -194,7 +189,7 @@
           <td colspan="2" align="right"><button onclick="
             (async () => {
               let { data: dadosprofissionais, error } = await supabase.from('dadosprofissionais').select('*')
-              let cpfBusca = `${parseInt(document.getElementById('cpfBusca').value.slice(3,-2)).toString(36)}@profissional.ext`;
+              let cpfBusca = `${parseInt(document.getElementById('cpfBusca').value).toString(36)}@profissional.ext`;
 
               for (let usuario of dadosprofissionais) {
                 
