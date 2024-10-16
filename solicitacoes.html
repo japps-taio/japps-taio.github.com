@@ -32,6 +32,12 @@
       <meta content="lua-wpp" name="generator"/>
       <meta content="width=device-width,initial-scale=1.0" name="viewport"/>
       <link href="assets/css/style.css" rel="stylesheet"/>
+      <script  src="https://unpkg.com/@supabase/supabase-js@2"></script>
+      <script>
+      const supabaseUrl = 'https://lsnvjibgvbjxqctmnteg.supabase.co';
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxzbnZqaWJndmJqeHFjdG1udGVnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyODkyMjg2MywiZXhwIjoyMDQ0NDk4ODYzfQ.gW6JvgYrpYRU2K332UPr03-haZA2vLM4SQduOkocI_k';
+window.supabase = supabase.createClient(supabaseUrl, supabaseKey);
+      </script>
     </head>
     <body class="container-lg px-3 my-5 markdown-body">
         <div class="navbar" style="display: flex;justify-content: space-between; padding: 0;">
@@ -58,7 +64,6 @@
         </table>
         <br/>
     </body>
-    <script src="js/lista-profissionais-vivver.js"></script>
     <script src="js/solicitacoes_excluidas.js"></script>
     <script src="js/lista_profissionais_solicitacoes.js"></script>
     <script src="assets/js/logout.js"></script>
@@ -92,8 +97,8 @@
             let profissional = document.getElementById("lista-profissional").value;
             document.getElementById("total").textContent = 0;
 
-            for (var i = 0; i < Solicitacoes_Excluidas.length; i++) {
-                const solicitacao = Solicitacoes_Excluidas[i];
+            for (var i = 0; i < SolicitacoesExcluidas.length; i++) {
+                const solicitacao = SolicitacoesExcluidas[i];
                 const data_solicitacao = parseInt(solicitacao[5]);
     
                 if (data_solicitacao>data_final||data_solicitacao<data_inicial) continue;

@@ -27,13 +27,8 @@
     <link href="assets/css/style.css" rel="stylesheet" />
     <script  src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script>
-      const supabaseUrl = 'https://jkuzbtjfcwomnnwlrfsq.supabase.co';
-      const supabaseKey = (`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ
-                            pc3MiOiJzdXBhYmFzZSIsInJlZiI6ImprdXpidGp
-                            mY3dvbW5ud2xyZnNxIiwicm9sZSI6ImFub24iLCJ
-                            pYXQiOjE3MTMyODk3NDYsImV4cCI6MjAyODg2NTc
-                            0Nn0.JXaiNJk_i_aCylIyUMMg9R6wVn3Kikvzb3p
-                            iAXer3Cc`).replaceAll(/[\n\r ]/g,'');
+      const supabaseUrl = 'https://lsnvjibgvbjxqctmnteg.supabase.co';
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxzbnZqaWJndmJqeHFjdG1udGVnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyODkyMjg2MywiZXhwIjoyMDQ0NDk4ODYzfQ.gW6JvgYrpYRU2K332UPr03-haZA2vLM4SQduOkocI_k';
       window.supabase = supabase.createClient(supabaseUrl, supabaseKey);
     </script>
   </head>
@@ -56,7 +51,7 @@
         <tr><td>&nbsp;</td></tr>
         <tr>
           <td style="min-width: 300px;">Nome:</td>
-          <td><select id="nome_equipe_vivver"></select></td>
+          <td><input id="nome_equipe_vivver"></td>
         </tr>
         <tr>
           <td style="min-width: 300px;">Cirurgião-dentista:</td>
@@ -321,38 +316,8 @@
     </table>
 
     <h3><br /></h3>
-
-    <script src="js/lista-profissionais-vivver.js"></script>
     <script src="assets/js/logout.js"></script>
     <script> 
-      let equipes = [];
-      let listaEquipes = [];
-      let listaProfissionais = `<option value="">-</option>`;
-
-      for (let profissional of Profissionais) {
-        for (let equipe of profissional[4]) {
-          if (equipes[equipe]==undefined && equipe) {
-            equipes[equipe]=true;
-            listaEquipes.push(equipe);
-          }
-        }
-
-        listaProfissionais += `
-            <option value="${profissional[0]}">${profissional[1]} - ${profissional[0]}</option>
-        `;
-      }
-
-      for (let select of [...document.getElementsByTagName("select")]) {
-        select.innerHTML = listaProfissionais;
-      }
-
-      listaEquipes.sort();
-
-      for (let equipe of listaEquipes) {
-        document.getElementById("nome_equipe_vivver").innerHTML += `
-          <option value="${equipe}">${equipe}</option>
-        `;
-      }
 
       const iconeRemover = `
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -387,6 +352,18 @@
       }
 
       async function listarEquipes() {
+
+      let { data: profissionais, x } = await supabase.from('dadosprofissionais').select('*');
+      let profissionaisOrdenados = profissionais.sort((a,b) => a.nome > b.nome ? 1 : -1);
+      let listaProfissionais = `<option value="">-</option>`;
+      for (let profissional of profissionaisOrdenados) {
+            listaProfissionais += `<option value="${profissional.codprofissional}">${profissional.nome} - ${profissional.codprofissional}</option>`;
+      }
+
+      for (let select of [...document.getElementsByTagName("select")]) {
+        select.innerHTML = listaProfissionais;
+      }
+
         let { data: equipes, error } = await supabase.from('equipes').select('*');
 
         document.getElementById("lista-equipes").innerHTML = `
